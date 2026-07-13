@@ -1,0 +1,66 @@
+.
+├── config
+│   ├── __init__.py
+│   └── settings.py
+├── context
+│   ├── analyzer.py
+│   ├── builder.py
+│   ├── exporter.py
+│   ├── __init__.py
+│   ├── templates
+│   └── validator.py
+├── core
+│   ├── __init__.py
+│   ├── llm.py
+│   ├── memory.py
+│   ├── persona.py
+│   ├── router.py
+│   └── runtime.py
+├── data
+│   ├── datasets
+│   │   └── test.jsonl
+│   ├── exports
+│   ├── logs
+│   ├── memory
+│   └── models
+├── database
+│   ├── datasets.py
+│   ├── editor.py
+│   ├── exporter.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── datasets.cpython-312.pyc
+│   │   ├── editor.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── search.cpython-312.pyc
+│   │   ├── statistics.cpython-312.pyc
+│   │   └── validator.cpython-312.pyc
+│   ├── search.py
+│   ├── statistics.py
+│   └── validator.py
+├── docs
+│   ├── PROJECT_CONTEXT.md
+│   ├── PROJECT_STATE.md
+│   └── TREE_SNAPSHOT.txt
+├── ella.py
+├── chat
+│   ├── history.py
+│   ├── __init__.py
+│   ├── response.py
+│   └── session.py
+├── README.md
+├── tester
+│   └── __init__.py
+├── tests
+│   ├── fixtures
+│   ├── __init__.py
+│   ├── run_tests.py
+│   ├── test_datasets.py
+│   ├── test_editor.py
+│   ├── test_search.py
+│   ├── test_statistics.py
+│   └── test_validator.py
+└── tools
+    └── __init__.py
+
+19 directories, 45 files

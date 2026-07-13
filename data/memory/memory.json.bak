@@ -1,0 +1,94 @@
+[
+  {
+    "role": "user",
+    "content": "Ahoj"
+  },
+  {
+    "role": "user",
+    "content": "Ahoj"
+  },
+  {
+    "role": "assistant",
+    "content": "Nazdar!"
+  },
+  {
+    "role": "user",
+    "content": "Jmenuji se Akim"
+  },
+  {
+    "role": "assistant",
+    "content": "Nazdar! Mluvím česky."
+  },
+  {
+    "role": "user",
+    "content": "jak se jmenuji?"
+  },
+  {
+    "role": "assistant",
+    "content": "Jmenuji se Ella."
+  },
+  {
+    "role": "user",
+    "content": "jak se jmenuji?"
+  },
+  {
+    "role": "assistant",
+    "content": "Jmenuji se Ella."
+  },
+  {
+    "role": "user",
+    "content": "Jak se jmenuji?"
+  },
+  {
+    "role": "assistant",
+    "content": "Jmenuji se Ella."
+  },
+  {
+    "role": "user",
+    "content": "Jmenuji se Pepa"
+  },
+  {
+    "role": "assistant",
+    "content": "Jmenuji se Ella."
+  },
+  {
+    "role": "user",
+    "content": "jak se jmenuji?"
+  },
+  {
+    "role": "assistant",
+    "content": "Jmenuješ se Pepa."
+  },
+  {
+    "role": "user",
+    "content": "co je projekt Ella"
+  },
+  {
+    "role": "assistant",
+    "content": "Projekt Ella je lokální AI asistentka vytvořená pro různé účely použití."
+  },
+  {
+    "role": "user",
+    "content": "co je projekt Ella?"
+  },
+  {
+    "role": "assistant",
+    "content": "Projekt Ella je lokální AI asistentka."
+  },
+  {
+    "role": "user",
+    "content": "co je projekt Ella?"
+  },
+  {
+    "role": "assistant",
+    "content": "Projekt Ella je lokální AI asistentka."
+  },
+  {
+    "role": "user",
+    "content": "Jaká je dlouhodobá vize projektu?"
+  },
+  {
+    "role": "assistant",
+    "content": "Projekt Ella má dlouhodobou vize poskytnutí bezmez节rovy možností pro uživatele, jako jsou snadno dostupné informace a rychlé řešení problémů."
+  }
+]

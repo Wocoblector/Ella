@@ -1,0 +1,5 @@
+Python je programovací jazyk.
+
+Linux Mint je operační systém.
+
+Projekt se jmenuje Ella.
