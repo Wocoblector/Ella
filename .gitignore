@@ -3,3 +3,10 @@ __pycache__/
 *.pyc
 *.pyo
 *.log
+
+data/memory/memory.json
+data/memory/*.bak
+
+.vscode/
+.DS_Store
+Thumbs.db
