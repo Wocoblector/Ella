@@ -1,9 +1,13 @@
-# VERSION: 7
+# VERSION: 8
 
 from core.knowledge import find_answer
 from core.llm import ask
 from core.facts import get_fact
 from core.vector_search import search_vectors
+
+
+MIN_RAG_SCORE = 0.30
+MAX_CONTEXT_CHUNKS = 5
 
 
 def route(message):
@@ -43,17 +47,36 @@ def route(message):
 
     if chunks:
 
-        context = chunks[0]["chunk"]["content"]
+        best_score = chunks[0]["score"]
 
-        response = ask(
-            message,
-            context=context
-        )
+        if best_score >= MIN_RAG_SCORE:
 
-        return {
-            "source": "rag",
-            "response": response
-        }
+            context_parts = []
+
+            for item in chunks[:MAX_CONTEXT_CHUNKS]:
+
+                if item["score"] < MIN_RAG_SCORE:
+                    continue
+
+                context_parts.append(
+                    item["chunk"]["content"]
+                )
+
+            if context_parts:
+
+                context = "\n\n".join(
+                    context_parts
+                )
+
+                response = ask(
+                    message,
+                    context=context
+                )
+
+                return {
+                    "source": "rag",
+                    "response": response
+                }
 
     response = ask(message)
 
