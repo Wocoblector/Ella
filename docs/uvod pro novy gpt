@@ -1,1 +1,31 @@
-Toto je hlavní dokumentace projektu Ella. Nejprve si celý dokument pečlivě přečti a analyzuj. Zatím negeneruj žádný kód. Nejprve zhodnoť architekturu, upozorni na případné slabiny nebo chybějící části a navrhni zlepšení. Teprve po odsouhlasení budeme pokračovat ve vývoji projektu podle této dokumentace.
+Pokračujeme Ella
+
+Vytvoř celý nový:
+docs/PROJECT_CONTEXT.md
+
+a
+
+docs/PROJECT_STATE_v4.md
+
+Použij aktuální stav projektu:
+
+Model:
+qwen2.5:7b
+
+Embedding:
+paraphrase-multilingual-MiniLM-L12-v2
+
+Router:
+v8
+multi-chunk retrieval
+
+Core:
+memory
+facts
+knowledge
+documents
+embeddings
+vector search
+RAG
+
+TREE_SNAPSHOT je aktuální.
