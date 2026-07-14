@@ -1,4 +1,4 @@
-# VERSION: 2
+# VERSION: 4
 
 from core.router import route
 from core.memory import (
@@ -14,7 +14,6 @@ def process_message(message):
     """
 
     text = message.strip()
-
     lower_text = text.lower()
 
     if lower_text.startswith("jmenuji se "):
@@ -34,7 +33,23 @@ def process_message(message):
     result = route(message)
 
     response = result["response"]
-    source = result["source"]
+
+    score_text = ""
+
+    if result["source"] == "rag":
+
+        source_text = result.get(
+            "document",
+            "unknown"
+        )
+
+        score_text = (
+            f"\nSCORE: "
+            f"{result.get('score', 0)}"
+        )
+
+    else:
+        source_text = result["source"]
 
     add_message(
         "assistant",
@@ -43,7 +58,8 @@ def process_message(message):
 
     return (
         f"{response}\n\n"
-        f"SOURCE: {source}"
+        f"SOURCE: {source_text}"
+        f"{score_text}"
     )
 
 

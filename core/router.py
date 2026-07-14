@@ -1,10 +1,9 @@
-# VERSION: 8
+# VERSION: 11
 
 from core.knowledge import find_answer
 from core.llm import ask
 from core.facts import get_fact
 from core.vector_search import search_vectors
-
 
 MIN_RAG_SCORE = 0.30
 MAX_CONTEXT_CHUNKS = 5
@@ -75,6 +74,8 @@ def route(message):
 
                 return {
                     "source": "rag",
+                    "document": chunks[0]["chunk"]["file"],
+                    "score": round(best_score, 3),
                     "response": response
                 }
 

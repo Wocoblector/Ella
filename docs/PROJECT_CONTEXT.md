@@ -1,729 +1,217 @@
-# ELLA PROJECT CONTEXT v1.0
+# ELLA PROJECT CONTEXT v2.1 (MASTER CONTEXT)
 
-> Tento dokument slouží jako hlavní technická dokumentace projektu Ella a zároveň jako kontext pro pokračování vývoje v novém ChatGPT chatu.
+Tento dokument je sloučením původního PROJECT_CONTEXT v1.0 a novějších změn projektu.
 
----
+## Stav projektu
 
-# 1. Přehled projektu
+Ella je lokální AI platforma vyvíjená v Pythonu.
 
-## Název projektu
+Původně vznikla jako AI asistent, postupně se rozšířila o:
 
-Ella
+- Facts
+- Memory
+- Documents
+- Embeddings
+- Vector Search
+- RAG
+- Source Tracking
+- Score Tracking
+- Test Suite
 
-## Typ projektu
+## Architektonické principy
 
-Lokální AI asistent vyvíjený v Pythonu.
+- Modulární architektura
+- Jedna odpovědnost na modul
+- Oddělení logiky od UI
+- Preferovat jednoduchá řešení
+- Zachovat dlouhodobou rozšiřitelnost
 
-## Hlavní cíl
+## Aktuální tok systému
 
-Vytvořit modulární AI systém, který bude možné dlouhodobě rozšiřovat bez nutnosti měnit jeho architekturu.
-
-Ella není jednorázový program, ale platforma pro vývoj vlastního AI asistenta.
-
-Projekt je navržen tak, aby běžel lokálně a aby jednotlivé části systému byly od sebe co nejvíce oddělené.
-
----
-
-# 2. Dlouhodobá vize
-
-Ella má být osobní AI asistent schopný:
-
-* komunikovat v češtině,
-* pracovat lokálně,
-* využívat různé LLM modely,
-* využívat datasety,
-* používat paměť,
-* plánovat úkoly,
-* používat externí nástroje,
-* pracovat s Linuxem,
-* spolupracovat s Home Assistant,
-* být dlouhodobě rozšiřitelná.
-
-Cílem není vytvořit další chatbot.
-
-Cílem je vytvořit vlastní AI platformu.
-
----
-
-# 3. Filozofie projektu
-
-Při návrhu projektu byly stanoveny následující zásady.
-
-## Modularita
-
-Každý modul má přesně definovanou odpovědnost.
-
-Nikdy nebude jeden soubor řešit více různých problémů.
-
----
-
-## Jedna odpovědnost
-
-Každý modul řeší pouze jednu oblast.
-
-Například:
-
-* database pouze databázovou vrstvu,
-* chat pouze komunikaci,
-* runtime pouze běh systému,
-* router pouze rozhodování,
-* memory pouze práci s pamětí.
-
----
-
-## Znovupoužitelnost
-
-Moduly nesmí být závislé na konkrétním uživatelském rozhraní.
-
-Stejný modul musí být možné použít:
-
-* z terminálu,
-* z GUI,
-* z webového rozhraní,
-* z API.
-
----
-
-## Oddělení logiky
-
-Logika programu nesmí být promíchaná s komunikací s uživatelem.
-
-Například:
-
-database/datasets.py
-
-obsahuje pouze práci s daty.
-
-database/editor.py
-
-obsahuje pouze komunikaci s uživatelem.
-
----
-
-## Postupný vývoj
-
-Projekt nebude vytvářen najednou.
-
-Nejdříve vznikne stabilní základ.
-
-Teprve potom budou přidávány nové schopnosti.
-
----
-
-# 4. Architektura systému
-
-Ella používá vrstvenou architekturu.
-
-Každá vrstva komunikuje pouze s vrstvou pod sebou.
-
-Schéma:
-
-Layer 1
-UI / Chat
-
+Uživatel
 ↓
-
-Layer 2
-Runtime
-
-↓
-
-Layer 3
-Router
-
-↓
-
-Layer 4
-Knowledge
-LLM
-Tools
-
-↓
-
-Layer 5
-Memory
-
-↓
-
-Layer 6
-Storage
-
-Toto rozdělení je základním pravidlem celého projektu.
-
-Vyšší vrstva nesmí obcházet nižší.
-
----
-
-# 5. Aktuální struktura projektu
-
-Projekt je aktuálně rozdělen přibližně takto:
-
-config/
-Nastavení projektu.
-
-context/
-Nástroje pro vytváření projektového kontextu.
-
-core/
-Hlavní logika systému.
-
-database/
-Databázová vrstva.
-
-chat/
-Komunikace.
-
-data/
-Všechna data projektu.
-
-docs/
-Dokumentace.
-
-tester/
-Pomocné nástroje.
-
-tests/
-Automatické testy.
-
-tools/
-Budoucí nástroje.
-
 ella.py
+↓
+runtime.py
+↓
+router.py
+↓
+Facts / Database / RAG / LLM
+↓
+Odpověď
 
-Hlavní vstupní bod programu.
+Priorita routeru:
 
----
+1. Facts
+2. Database
+3. RAG
+4. LLM
 
-# 6. Stav projektu
+## Databázová vrstva
 
-Hotové:
+Dokončeno:
 
-* základ adresářové struktury,
-* databázová vrstva,
-* práce s JSONL datasety,
-* vyhledávání,
-* validace,
-* statistiky,
-* editor datasetů,
-* testovací struktura.
+- datasets.py
+- search.py
+- validator.py
+- statistics.py
+- editor.py
 
-Rozpracované:
+## Core vrstva
 
-* automatické testy,
-* runtime,
-* router,
-* chat,
-* memory,
-* LLM,
-* context exporter.
+Dokončeno:
 
-Neimplementované:
+- runtime.py
+- router.py
+- facts.py
+- memory.py
+- llm.py
 
-* agent,
-* planner,
-* Home Assistant,
-* Linux tools,
-* voice,
-* vision,
-* learning,
-* GUI.
+## Facts
 
----
+Schopnosti:
 
-Konec části 1.
+- ukládání faktů
+- načítání faktů
+- práce se jménem uživatele
 
+Soubor:
 
-# 7. Popis jednotlivých modulů
+data/memory/facts.json
 
-## config/
+## Memory
 
-Obsahuje globální konfiguraci projektu.
+Schopnosti:
 
-Příklady:
+- ukládání historie
+- načítání historie
+- poslední zprávy po spuštění
 
-* cesty k adresářům,
-* názvy modelů,
-* výchozí nastavení,
-* systémové konstanty.
+Soubor:
 
-Veškerá konfigurace projektu bude soustředěna zde.
+data/memory/memory.json
 
----
+## Dokumentový systém
 
-## context/
+Moduly:
 
-Obsahuje nástroje pro práci s projektovým kontextem.
+- document_loader.py
+- document_chunks.py
 
-Účel:
+Schopnosti:
 
-* analyzovat projekt,
-* vytvořit přehled projektu,
-* exportovat kontext pro nový ChatGPT chat,
-* kontrolovat správnost vytvořeného kontextu.
+- načítání dokumentů
+- chunking
 
-Plánované moduly:
+## Embeddings
 
-* analyzer.py
-* builder.py
-* exporter.py
-* validator.py
+Použitá technologie:
 
-Budoucím cílem je, aby Ella dokázala vytvořit aktuální projektový kontext automaticky.
+- sentence-transformers
 
----
+## Vector Search
 
-## core/
+Schopnosti:
 
-Obsahuje hlavní logiku systému.
+- cosine similarity
+- relevance scoring
+- vyhledávání chunků
 
-Sem patří například:
+## RAG
 
-* runtime,
-* router,
-* LLM komunikace,
-* persona,
-* práce s pamětí.
+Dokončeno:
 
-Core neobsahuje uživatelské rozhraní.
+- retrieval
+- multi chunk retrieval
+- source tracking
+- score tracking
 
-Core pouze řídí běh systému.
+Výstup:
 
----
+SOURCE: dokument
 
-## database/
+SCORE: relevance
 
-Databázová vrstva.
+## Testovací systém
 
-Je první dokončenou vrstvou projektu.
+Spouštění:
 
-Obsahuje:
+python -m tests.run_tests
 
-datasets.py
+Testované části:
 
-Práce s JSONL datasety.
+- datasets
+- search
+- validator
+- statistics
+- editor
+- rag
 
-Veřejné funkce:
+## Dokončené milníky
 
-* list_datasets()
-* load_dataset()
-* save_dataset()
-* add_record()
-* edit_record()
-* delete_record()
+RAG-01 Dokumenty
 
----
+RAG-02 Embeddings
 
-search.py
+RAG-03 Vector Search
 
-Vyhledávání v datasetech.
+RAG-04 Multi Chunk Retrieval
 
-Odpovědnost:
+RAG-31 Source Tracking
 
-Vyhledávání záznamů.
+RAG-32 Score Tracking
 
----
+## Důležité zkušenosti
 
-validator.py
+Při úpravách kódu vracet celý soubor.
 
-Kontrola datasetů.
+Nevracet malé patche.
 
-Odpovědnost:
+Pokud není znám aktuální obsah souboru, nejprve si jej vyžádat.
 
-* validace,
-* hledání chyb,
-* kontrola duplicit.
+## TRAIN větev
 
----
+TRAIN-01 Document → Dataset Generator
 
-statistics.py
+TRAIN-02 Dataset Review
 
-Statistiky datasetů.
+TRAIN-03 Dataset Export
 
-Například:
+TRAIN-04 Training Runner
 
-* počet datasetů,
-* počet záznamů,
-* statistiky projektu.
+TRAIN-05 Model Registry
 
----
+Dlouhodobý cíl:
 
-editor.py
+Document → Dataset → Training → Model
 
-Uživatelské rozhraní databázové vrstvy.
+## Budoucí oblasti
 
-Obsahuje pouze komunikaci s uživatelem.
+- Agent systém
+- Planner
+- Linux Tools
+- Home Assistant
+- Voice
+- Vision
+- GUI
 
-Neobsahuje logiku práce se soubory.
+## CHATGPT CONTINUATION PROMPT
 
-Využívá funkce z datasets.py.
+- Odpovídej stručně
+- Šetři tokeny
+- 1 krok = 1 úkol
+- Preferuj Python
+- Předpokládej Linux
+- Při úpravě vracej celý soubor
+- Rozlišuj TERMINAL / PYTHON / PYTHON .VENV
+- Na konci používej HOTOVO a stručný DALŠÍ KROK
 
----
+## Instrukce pro nový GPT
 
-## data/
+1. Přečti PROJECT_CONTEXT.md
+2. Přečti TREE_SNAPSHOT.txt
+3. Zjisti aktuální stav projektu
+4. Zachovej architekturu
+5. Pokračuj od TRAIN-01
 
-Obsahuje všechna data projektu.
-
-Například:
-
-datasets/
-
-JSONL datasety.
-
-exports/
-
-Exporty.
-
-logs/
-
-Logy.
-
-memory/
-
-Budoucí paměť.
-
-models/
-
-Lokální AI modely.
-
-Veškerá data jsou oddělena od zdrojových kódů.
-
----
-
-## chat/
-
-Vrstva komunikace.
-
-Odpovídá pouze za komunikaci s uživatelem.
-
-Bude obsahovat:
-
-* historii,
-* správu relace,
-* tvorbu odpovědi.
-
-Chat nebude rozhodovat, odkud odpověď pochází.
-
-To bude úkol routeru.
-
----
-
-## tools/
-
-Moduly umožňující Elle komunikovat s okolním světem.
-
-Například:
-
-* Linux,
-* Home Assistant,
-* internet,
-* soubory,
-* systémové nástroje.
-
-Každý nástroj bude samostatný modul.
-
----
-
-## tests/
-
-Automatické testy projektu.
-
-Každý hlavní modul bude mít vlastní test.
-
-Například:
-
-* test_datasets.py
-* test_search.py
-* test_validator.py
-* test_statistics.py
-* test_editor.py
-
-Cílem je ověřit funkčnost projektu jedním příkazem.
-
----
-
-# 8. Architektonická pravidla
-
-Během vývoje byla stanovena následující pravidla.
-
-1. Každý modul řeší jednu oblast.
-
-2. Funkce nesmí být zbytečně duplikovány.
-
-3. Logika musí být oddělena od uživatelského rozhraní.
-
-4. Moduly musí být znovupoužitelné.
-
-5. Nové funkce se přidávají pouze tehdy, pokud mají jasně definovanou odpovědnost.
-
-6. Architektura má přednost před rychlým řešením.
-
-7. Každá větší změna musí zachovat přehlednost projektu.
-
----
-
-Konec části 2.
-
-# 9. Aktuální stav projektu
-
-Tento dokument popisuje stav projektu v okamžiku ukončení první etapy vývoje.
-
-## Dokončené části
-
-### Struktura projektu
-
-Byla vytvořena základní adresářová struktura projektu.
-
-Projekt je rozdělen na samostatné moduly s jasně definovanou odpovědností.
-
----
-
-### Databázová vrstva
-
-Dokončené moduly:
-
-* database/datasets.py
-* database/search.py
-* database/validator.py
-* database/statistics.py
-* database/editor.py
-
-Tyto moduly tvoří první stabilní vrstvu projektu.
-
----
-
-### Testovací prostředí
-
-Byl vytvořen adresář tests/.
-
-Byla připravena struktura automatických testů.
-
-Samotné testy budou doplněny v další etapě.
-
----
-
-### Dokumentace
-
-Byl založen dokument PROJECT_CONTEXT.md.
-
-Od této chvíle představuje hlavní technickou dokumentaci projektu.
-
----
-
-# 10. Nejbližší plán vývoje
-
-Další vývoj bude pokračovat po jednotlivých etapách.
-
-## Etapa 2
-
-Dokončit databázovou vrstvu.
-
-Úkoly:
-
-* vytvořit automatické testy,
-* vytvořit test runner,
-* ověřit stabilitu všech databázových modulů.
-
-Po dokončení bude databázová vrstva považována za uzavřenou.
-
----
-
-## Etapa 3
-
-Vybudovat Core.
-
-Postupně implementovat:
-
-* runtime,
-* router,
-* persona,
-* memory,
-* llm.
-
-Cílem bude vytvořit funkční AI jádro.
-
----
-
-## Etapa 4
-
-Chat.
-
-Napojení:
-
-* runtime,
-* router,
-* databáze,
-* LLM.
-
-Vznikne první kompletní konverzační systém Elly.
-
----
-
-## Etapa 5
-
-Tools.
-
-Budou přidávány jednotlivé nástroje.
-
-Například:
-
-* Linux,
-* Home Assistant,
-* práce se soubory,
-* systémové příkazy.
-
----
-
-## Etapa 6
-
-Samostatnost.
-
-Budoucí oblasti:
-
-* plánování,
-* učení,
-* agent,
-* dlouhodobá paměť,
-* rozšiřování znalostí.
-
----
-
-# 11. Pravidla vývoje
-
-Při pokračování projektu musí být dodržována následující pravidla.
-
-1. Zachovávat modulární architekturu.
-
-2. Nepřesouvat odpovědnost mezi moduly bez důvodu.
-
-3. Každý nový modul musí mít jasně definovanou úlohu.
-
-4. Před implementací nejprve navrhnout architekturu.
-
-5. Zdrojové kódy musí být čitelné a jednoduché.
-
-6. Upřednostňovat dlouhodobě udržitelné řešení před rychlým řešením.
-
-7. Po dokončení větší části aktualizovat PROJECT_CONTEXT.md.
-
-8. Každý důležitý úkol označovat identifikátorem.
-
-Používané prefixy:
-
-* [ARCH]
-* [DB]
-* [CORE]
-* [CHAT]
-* [MEM]
-* [LLM]
-* [TOOLS]
-* [CTX]
-* [TEST]
-* [BUG]
-* [DOC]
-
----
-
-# 12. Instrukce pro nový ChatGPT
-
-Tento dokument slouží jako výchozí kontext.
-
-Nový ChatGPT by měl:
-
-* nejprve přečíst PROJECT_CONTEXT.md,
-* pochopit architekturu projektu,
-* pokračovat podle roadmapy,
-* respektovat rozdělení odpovědností mezi moduly,
-* nenavrhovat řešení, která porušují architekturu projektu.
-
-Při úpravě zdrojových kódů není nutné znovu zasílat celý projekt.
-
-Stačí zaslat:
-
-* PROJECT_CONTEXT.md,
-* soubor nebo modul, který se bude upravovat.
-
-Projekt je navržen tak, aby jednotlivé moduly bylo možné upravovat samostatně.
-
----
-
-# 13. Poznámka autora projektu
-
-Projekt Ella je dlouhodobý projekt zaměřený na vytvoření vlastního modulárního AI asistenta.
-
-Hlavním cílem není vytvořit pouze chatbota, ale stabilní platformu, kterou bude možné mnoho let rozšiřovat o nové schopnosti bez nutnosti měnit její základní architekturu.
-
-Proto má návrh architektury, dokumentace a testování stejnou důležitost jako samotný zdrojový kód.
-
----
-
----
-
-# 14. Doplňující projektové dokumenty
-
-Tento dokument (`PROJECT_CONTEXT.md`) je hlavní dokumentace architektury projektu Ella.
-
-Pro úplné pochopení aktuálního stavu projektu existují další doplňující dokumenty ve složce:
-
-```text
-docs/
-```
-
-## PROJECT_STATE.md
-
-Obsahuje aktuální technický stav projektu.
-
-Obsah:
-
-* skutečný stav implementace,
-* stav jednotlivých modulů,
-* hotové a rozpracované části,
-* poslední dokončené úkoly,
-* další doporučený postup.
-
-Při pokračování vývoje je doporučeno si tento dokument vyžádat a přečíst.
-
----
-
-## TREE_SNAPSHOT.txt
-
-Obsahuje aktuální fyzickou strukturu projektu.
-
-Obsah:
-
-* seznam složek,
-* seznam souborů,
-* aktuální organizace projektu.
-
-Slouží ke kontrole rozdílu mezi navrženou architekturou a skutečným stavem projektu.
-
----
-
-# Instrukce pro nový ChatGPT
-
-Před zahájením dalšího vývoje:
-
-1. Nejprve analyzuj tento dokument `PROJECT_CONTEXT.md`.
-
-2. Pokud potřebuješ znát aktuální stav implementace, vyžádej si:
-
-```text
-docs/PROJECT_STATE.md
-```
-
-3. Pokud potřebuješ znát aktuální strukturu souborů, vyžádej si:
-
-```text
-docs/TREE_SNAPSHOT.txt
-```
-
-4. Nezačínej implementovat nové části, dokud není jasný aktuální stav projektu.
-
-Tyto dokumenty společně tvoří základní kontext projektu Ella.
-
----
-
-Konec dokumentace.
-
-
-
-
+Konec dokumentu.
