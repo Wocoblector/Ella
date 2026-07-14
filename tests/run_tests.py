@@ -3,6 +3,7 @@ from tests.test_search import run as test_search
 from tests.test_validator import run as test_validator
 from tests.test_statistics import run as test_statistics
 from tests.test_editor import run as test_editor
+from tests.test_rag import run as test_rag
 
 
 def main():
@@ -13,6 +14,7 @@ def main():
     test_validator()
     test_statistics()
     test_editor()
+    test_rag()
 
     print("\n=== HOTOVO ===\n")
 
