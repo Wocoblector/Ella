@@ -1,3 +1,5 @@
+# VERSION: 2
+
 from core.router import route
 from core.memory import (
     add_message,
@@ -16,7 +18,6 @@ def process_message(message):
     lower_text = text.lower()
 
     if lower_text.startswith("jmenuji se "):
-
         name = text[11:].strip()
 
         if name:
@@ -33,13 +34,17 @@ def process_message(message):
     result = route(message)
 
     response = result["response"]
+    source = result["source"]
 
     add_message(
         "assistant",
         response
     )
 
-    return response
+    return (
+        f"{response}\n\n"
+        f"SOURCE: {source}"
+    )
 
 
 def show_memory():
